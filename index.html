@@ -397,7 +397,7 @@
         <div class="main-section">
             <div class="section-header">
                 <h2 class="section-title">Tea Categories</h2>
-                ${adminPassword ? '<button id="addCategoryBtn" class="add-btn" onclick="openCategoryModal()">+ Add Category</button>' : ''}
+                <button id="addCategoryBtn" class="add-btn" onclick="handleAddCategory()">+ Add Category</button>
             </div>
             <div id="categoriesContainer">
                 <div class="loading">Loading teas...</div>
@@ -631,6 +631,14 @@
             document.getElementById('categoryModalTitle').textContent = 'Add Category';
             document.getElementById('categoryName').value = '';
             document.getElementById('categoryModal').classList.add('active');
+        }
+
+        function handleAddCategory() {
+            if (!adminPassword) {
+                showLoginModal();
+                return;
+            }
+            openCategoryModal();
         }
 
         function closeCategoryModal() {
