@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tea</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Comic Neue', 'Comic Sans MS', 'Comic Sans', cursive;
+            box-sizing: border-box;
+        }
+        body {
+            background: #1a1a1a;
+            min-height: 100vh;
+            margin: 0;
+            padding: 15px;
+            color: #e0e0e0;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        h1 {
+            color: #90EE90;
+            font-size: 2.5em;
+            margin: 0;
+            letter-spacing: 2px;
+        }
+        .stats-bar {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 20px;
+            padding: 12px 20px;
+            background: #2d2d2d;
+            border-radius: 50px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        .stat {
+            text-align: center;
+        }
+        .stat-number {
+            font-size: 1.6em;
+            font-weight: bold;
+            color: #90EE90;
+        }
+        .stat-label {
+            font-size: 0.85em;
+            color: #aaa;
+        }
+        .main-section {
+            background: #2d2d2d;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .section-title {
+            color: #90EE90;
+            font-size: 1.4em;
+            margin: 0;
+        }
+        .add-btn {
+            background: #4a8c3f;
+            color: white;
+            border: none;
+            padding: 8px 18px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 0.95em;
+            transition: background 0.2s;
+        }
+        .add-btn:hover {
+            background: #5a9c4f;
+        }
+        .category {
+            margin-bottom: 15px;
+            border: 2px solid #444;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+        .category-header {
+            background: linear-gradient(135deg, #2d3a2d 0%, #3d4a3d 100%);
+            padding: 12px 15px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+        }
+        .category-header:hover {
+            background: linear-gradient(135deg, #3d4a3d 0%, #4d5a4d 100%);
+        }
+        .category-title {
+            font-size: 1.2em;
+            color: #90EE90;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .category-title .arrow {
+            transition: transform 0.3s;
+            font-size: 0.7em;
+        }
+        .category.expanded .category-title .arrow {
+            transform: rotate(90deg);
+        }
+        .category-actions {
+            display: flex;
+            gap: 8px;
+        }
+        .category-actions button {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1em;
+            padding: 5px 8px;
+            border-radius: 5px;
+            transition: background 0.2s;
+        }
+        .category-actions button:hover {
+            background: rgba(0,0,0,0.1);
+        }
+        .delete-cat {
+            color: #d9534f;
+        }
+        .category-content {
+            display: none;
+            padding: 15px;
+            background: #252525;
+        }
+        .category.expanded .category-content {
+            display: block;
+        }
+        .tea-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 15px;
+        }
+        .tea-card {
+            background: #333;
+            border-radius: 12px;
+            padding: 15px;
+            border: 1px solid #444;
+            position: relative;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .tea-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+        .tea-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+        .tea-name {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #90EE90;
+        }
+        .tea-actions {
+            display: flex;
+            gap: 5px;
+        }
+        .tea-actions button {
+            width: 26px;
+            height: 26px;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 12px;
+            transition: transform 0.2s;
+        }
+        .tea-actions button:hover {
+            transform: scale(1.1);
+        }
+        .edit-btn {
+            background: #5bc0de;
+            color: white;
+        }
+        .del-btn {
+            background: #d9534f;
+            color: white;
+        }
+        .variation {
+            background: #404040;
+            padding: 8px 10px;
+            margin: 6px 0;
+            border-radius: 8px;
+            border-left: 3px solid #4a8c3f;
+            position: relative;
+        }
+        .variation-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .variation-method {
+            font-weight: bold;
+            color: #90EE90;
+            font-size: 0.95em;
+            margin-bottom: 3px;
+        }
+        .variation-actions {
+            display: flex;
+            gap: 3px;
+        }
+        .variation-actions button {
+            width: 22px;
+            height: 22px;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 10px;
+            transition: transform 0.2s;
+        }
+        .variation-actions button:hover {
+            transform: scale(1.1);
+        }
+        .variation-detail {
+            font-size: 0.9em;
+            color: #666;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .variation-detail span {
+            background: #e0e0e0;
+            padding: 2px 8px;
+            border-radius: 10px;
+        }
+        .add-variation-btn {
+            display: block;
+            width: 100%;
+            padding: 8px;
+            margin-top: 10px;
+            background: #2d3a2d;
+            border: 2px dashed #4a8c3f;
+            border-radius: 8px;
+            color: #90EE90;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.9em;
+        }
+        .add-variation-btn:hover {
+            background: #3d4a3d;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 15px;
+        }
+        .modal.active {
+            display: flex;
+        }
+        .modal-content {
+            background: #2d2d2d;
+            padding: 25px;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 420px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        .modal h2 {
+            color: #90EE90;
+            margin-top: 0;
+        }
+        .form-group {
+            margin-bottom: 12px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 4px;
+            color: #aaa;
+            font-size: 0.9em;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #444;
+            border-radius: 10px;
+            font-size: 1em;
+            font-family: inherit;
+            background: #333;
+            color: #e0e0e0;
+        }
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: #4a8c3f;
+        }
+        .form-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .form-actions button {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1em;
+            font-family: inherit;
+        }
+        .submit-btn {
+            background: #4a8c3f;
+            color: white;
+        }
+        .cancel-btn {
+            background: #555;
+            color: #e0e0e0;
+        }
+        .form-actions button:hover {
+            opacity: 0.9;
+        }
+        .empty-state {
+            text-align: center;
+            padding: 30px;
+            color: #888;
+        }
+        .loading {
+            text-align: center;
+            padding: 30px;
+            color: #90EE90;
+            font-size: 1.1em;
+        }
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .stats-bar {
+                gap: 20px;
+                padding: 10px 15px;
+            }
+            .stat-number {
+                font-size: 1.3em;
+            }
+            .main-section {
+                padding: 15px;
+            }
+            .tea-grid {
+                grid-template-columns: 1fr;
+            }
+            .category-title {
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Tea</h1>
+        </header>
+
+        <div class="stats-bar">
+            <div class="stat">
+                <div class="stat-number" id="teaCount">-</div>
+                <div class="stat-label">Teas</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number" id="categoryCount">-</div>
+                <div class="stat-label">Categories</div>
+            </div>
+        </div>
+
+        <div class="main-section">
+            <div class="section-header">
+                <h2 class="section-title">Tea Categories</h2>
+                <button class="add-btn" onclick="openCategoryModal()">+ Add Category</button>
+            </div>
+            <div id="categoriesContainer">
+                <div class="loading">Loading teas...</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="categoryModal">
+        <div class="modal-content">
+            <h2 id="categoryModalTitle">Add Category</h2>
+            <form id="categoryForm" onsubmit="saveCategory(event)">
+                <div class="form-group">
+                    <label>Category Name</label>
+                    <input type="text" id="categoryName" required>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="cancel-btn" onclick="closeCategoryModal()">Cancel</button>
+                    <button type="submit" class="submit-btn">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal" id="teaModal">
+        <div class="modal-content">
+            <h2 id="teaModalTitle">Add Tea Variation</h2>
+            <form id="teaForm" onsubmit="saveTea(event)">
+                <input type="hidden" id="teaId">
+                <input type="hidden" id="teaCategoryId">
+                <div class="form-group">
+                    <label>Tea Name</label>
+                    <input type="text" id="teaName" required>
+                </div>
+                <div class="form-group" id="categoryGroup">
+                    <label>Category</label>
+                    <select id="teaCategory"></select>
+                </div>
+                <div class="form-group">
+                    <label>Steeping Method</label>
+                    <select id="teaMethod"></select>
+                </div>
+                <div class="form-group">
+                    <label>Leaf Amount</label>
+                    <input type="text" id="teaLeaf" placeholder="e.g., 5g">
+                </div>
+                <div class="form-group">
+                    <label>Temperature</label>
+                    <input type="text" id="teaTemp" placeholder="e.g., 80°C">
+                </div>
+                <div class="form-group">
+                    <label>Steeping Time</label>
+                    <input type="text" id="teaTime" placeholder="e.g., 1min">
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="cancel-btn" onclick="closeTeaModal()">Cancel</button>
+                    <button type="submit" class="submit-btn">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = window.location.origin + '/api';
+        let categoriesData = [];
+        let methodsData = [];
+        let editingTeaId = null;
+        let editingTeaCategoryId = null;
+        let isNewTea = true;
+
+        async function fetchData() {
+            try {
+                const [catsRes, methodsRes, statsRes] = await Promise.all([
+                    fetch(`${API_URL}/categories`),
+                    fetch(`${API_URL}/methods`),
+                    fetch(`${API_URL}/stats`)
+                ]);
+                
+                categoriesData = await catsRes.json();
+                methodsData = await methodsRes.json();
+                const stats = await statsRes.json();
+                
+                document.getElementById('teaCount').textContent = stats.teaCount;
+                document.getElementById('categoryCount').textContent = stats.categoryCount;
+                
+                renderCategories();
+                updateMethodSelect();
+                updateCategorySelect();
+            } catch (error) {
+                document.getElementById('categoriesContainer').innerHTML = 
+                    '<div class="empty-state">Unable to connect to server.</div>';
+            }
+        }
+
+        function renderCategories() {
+            const container = document.getElementById('categoriesContainer');
+            
+            if (categoriesData.length === 0) {
+                container.innerHTML = '<div class="empty-state">No categories yet. Add one above!</div>';
+                return;
+            }
+            
+            container.innerHTML = categoriesData.map(cat => `
+                <div class="category">
+                    <div class="category-header" onclick="toggleCategory(this.parentElement)">
+                        <div class="category-title">
+                            <span class="arrow">▶</span>
+                            ${cat.name}
+                            <span style="font-size: 0.8em; color: #888;">(${cat.teas.length} teas)</span>
+                        </div>
+                        <div class="category-actions">
+                            <button onclick="event.stopPropagation(); openTeaModal(null, ${cat.id})" title="Add tea">➕</button>
+                            <button class="delete-cat" onclick="event.stopPropagation(); deleteCategory(${cat.id})" title="Delete">🗑️</button>
+                        </div>
+                    </div>
+                    <div class="category-content">
+                        ${cat.teas.length > 0 ? `
+                            <div class="tea-grid">
+                                ${cat.teas.map(tea => `
+                                    <div class="tea-card">
+                                        <div class="tea-header">
+                                            <div class="tea-name">${tea.name}</div>
+                                        </div>
+                                        ${tea.variations.map(v => `
+                                            <div class="variation">
+                                                <div class="variation-header">
+                                                    <div class="variation-method">${v.method}</div>
+                                                    <div class="variation-actions">
+                                                        <button class="edit-btn" onclick="event.stopPropagation(); editTea(${v.id}, ${cat.id})" title="Edit">✏️</button>
+                                                        <button class="del-btn" onclick="event.stopPropagation(); deleteTea(${v.id})" title="Delete">🗑️</button>
+                                                    </div>
+                                                </div>
+                                                <div class="variation-detail">
+                                                    ${v.leaf_amount ? `<span>Leaf: ${v.leaf_amount}</span>` : ''}
+                                                    ${v.temperature ? `<span>Temp: ${v.temperature}</span>` : ''}
+                                                    ${v.steeping_time ? `<span>Time: ${v.steeping_time}</span>` : ''}
+                                                </div>
+                                            </div>
+                                        `).join('')}
+                                        <button class="add-variation-btn" onclick="event.stopPropagation(); openTeaModal(null, ${cat.id}, '${tea.name.replace(/'/g, "\\'")}')">+ Add Variation</button>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        ` : '<div class="empty-state">No teas in this category yet.</div>'}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function toggleCategory(element) {
+            element.classList.toggle('expanded');
+        }
+
+        function updateMethodSelect() {
+            const select = document.getElementById('teaMethod');
+            select.innerHTML = '<option value="">Select method...</option>' + 
+                methodsData.map(m => `<option value="${m.name}">${m.name}</option>`).join('');
+        }
+
+        function updateCategorySelect() {
+            const select = document.getElementById('teaCategory');
+            select.innerHTML = categoriesData.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
+        }
+
+        function openCategoryModal() {
+            document.getElementById('categoryModalTitle').textContent = 'Add Category';
+            document.getElementById('categoryName').value = '';
+            document.getElementById('categoryModal').classList.add('active');
+        }
+
+        function closeCategoryModal() {
+            document.getElementById('categoryModal').classList.remove('active');
+        }
+
+        async function saveCategory(event) {
+            event.preventDefault();
+            const name = document.getElementById('categoryName').value.trim();
+            
+            const res = await fetch(`${API_URL}/categories`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name })
+            });
+            
+            if (res.ok) {
+                closeCategoryModal();
+                fetchData();
+            } else {
+                alert('Category already exists');
+            }
+        }
+
+        async function deleteCategory(id) {
+            if (confirm('Delete this category and all its teas?')) {
+                await fetch(`${API_URL}/categories/${id}`, { method: 'DELETE' });
+                fetchData();
+            }
+        }
+
+        function openTeaModal(teaData, categoryId, teaName = '') {
+            isNewTea = true;
+            editingTeaId = null;
+            document.getElementById('teaModalTitle').textContent = 'Add Tea Variation';
+            document.getElementById('teaForm').reset();
+            document.getElementById('teaId').value = '';
+            document.getElementById('categoryGroup').style.display = 'block';
+            
+            const catSelect = document.getElementById('teaCategory');
+            if (categoryId) {
+                catSelect.value = categoryId;
+            }
+            
+            if (teaName) {
+                document.getElementById('teaName').value = teaName;
+                document.getElementById('teaName').readOnly = true;
+                document.getElementById('categoryGroup').style.display = 'none';
+                document.getElementById('teaCategoryId').value = categoryId;
+            } else {
+                document.getElementById('teaName').readOnly = false;
+            }
+            
+            if (teaData) {
+                fillTeaForm(teaData, categoryId);
+            }
+            
+            document.getElementById('teaModal').classList.add('active');
+        }
+
+        function editTea(teaId, categoryId) {
+            let teaData = null;
+            for (const cat of categoriesData) {
+                for (const tea of cat.teas) {
+                    const found = tea.variations.find(v => v.id === teaId);
+                    if (found) {
+                        teaData = { ...found, name: tea.name };
+                        break;
+                    }
+                }
+                if (teaData) break;
+            }
+            
+            if (teaData) {
+                isNewTea = false;
+                editingTeaId = teaId;
+                editingTeaCategoryId = categoryId;
+                document.getElementById('teaModalTitle').textContent = 'Edit Variation';
+                fillTeaForm(teaData, categoryId);
+                document.getElementById('teaName').readOnly = true;
+                document.getElementById('categoryGroup').style.display = 'none';
+                document.getElementById('teaCategoryId').value = categoryId;
+                document.getElementById('teaModal').classList.add('active');
+            }
+        }
+
+        function fillTeaForm(tea, categoryId) {
+            document.getElementById('teaId').value = tea.id || '';
+            document.getElementById('teaName').value = tea.name;
+            document.getElementById('teaMethod').value = tea.method || '';
+            document.getElementById('teaLeaf').value = tea.leaf_amount || '';
+            document.getElementById('teaTemp').value = tea.temperature || '';
+            document.getElementById('teaTime').value = tea.steeping_time || '';
+        }
+
+        function closeTeaModal() {
+            document.getElementById('teaModal').classList.remove('active');
+            editingTeaId = null;
+            editingTeaCategoryId = null;
+            document.getElementById('teaName').readOnly = false;
+        }
+
+        async function saveTea(event) {
+            event.preventDefault();
+            
+            const categoryId = document.getElementById('teaCategoryId').value || parseInt(document.getElementById('teaCategory').value);
+            
+            const teaData = {
+                name: document.getElementById('teaName').value.trim(),
+                category_id: categoryId,
+                method_name: document.getElementById('teaMethod').value,
+                leaf_amount: document.getElementById('teaLeaf').value.trim(),
+                temperature: document.getElementById('teaTemp').value.trim(),
+                steeping_time: document.getElementById('teaTime').value.trim()
+            };
+            
+            let url, method;
+            if (editingTeaId) {
+                url = `${API_URL}/teas/${editingTeaId}`;
+                method = 'PUT';
+            } else {
+                url = `${API_URL}/teas`;
+                method = 'POST';
+            }
+            
+            const res = await fetch(url, {
+                method,
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(teaData)
+            });
+            
+            if (res.ok) {
+                closeTeaModal();
+                fetchData();
+            }
+        }
+
+        async function deleteTea(id) {
+            if (confirm('Delete this variation?')) {
+                await fetch(`${API_URL}/teas/${id}`, { method: 'DELETE' });
+                fetchData();
+            }
+        }
+
+        fetchData();
+    </script>
+</body>
+</html>
