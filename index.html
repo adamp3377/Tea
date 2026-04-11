@@ -641,8 +641,17 @@
             openCategoryModal();
         }
 
-        function closeCategoryModal() {
-            document.getElementById('categoryModal').classList.remove('active');
+        function closeTeaModal() {
+            document.getElementById('teaModal').classList.remove('active');
+            editingTeaId = null;
+            editingTeaCategoryId = null;
+            document.getElementById('teaName').readOnly = false;
+        }
+
+        function closeOnBackground(event) {
+            if (event.target === event.currentTarget) {
+                event.currentTarget.classList.remove('active');
+            }
         }
 
         async function saveCategory(event) {
@@ -740,13 +749,6 @@
             document.getElementById('teaLeaf').value = tea.leaf_amount || '';
             document.getElementById('teaTemp').value = tea.temperature || '';
             document.getElementById('teaTime').value = tea.steeping_time || '';
-        }
-
-        function closeTeaModal() {
-            document.getElementById('teaModal').classList.remove('active');
-            editingTeaId = null;
-            editingTeaCategoryId = null;
-            document.getElementById('teaName').readOnly = false;
         }
 
         async function saveTea(event) {
