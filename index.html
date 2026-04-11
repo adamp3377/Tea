@@ -405,8 +405,8 @@
         </div>
     </div>
 
-    <div class="modal" id="categoryModal">
-        <div class="modal-content">
+    <div class="modal" id="categoryModal" onclick="closeOnBackground(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
             <h2 id="categoryModalTitle">Add Category</h2>
             <form id="categoryForm" onsubmit="saveCategory(event)">
                 <div class="form-group">
@@ -421,8 +421,8 @@
         </div>
     </div>
 
-    <div class="modal" id="teaModal">
-        <div class="modal-content">
+    <div class="modal" id="teaModal" onclick="closeOnBackground(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
             <h2 id="teaModalTitle">Add Tea Variation</h2>
             <form id="teaForm" onsubmit="saveTea(event)">
                 <input type="hidden" id="teaId">
@@ -459,8 +459,8 @@
         </div>
     </div>
 
-    <div class="modal" id="loginModal">
-        <div class="modal-content">
+    <div class="modal" id="loginModal" onclick="closeOnBackground(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
             <h2>Admin Login</h2>
             <form id="loginForm" onsubmit="handleLogin(event)">
                 <div class="form-group">
