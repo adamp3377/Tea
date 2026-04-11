@@ -41,31 +41,22 @@ DEFAULT_DATA = {
     ],
     "teas": [
         {
-            "id": 1,
+            "id": 2,
             "name": "Matcha",
             "category_id": 1,
             "method_id": 5,
             "leaf_amount": "4 scoops",
             "temperature": "80°C",
-            "steeping_time": "Whisk slowly until smooth",
-        },
-        {
-            "id": 2,
-            "name": "Matcha",
-            "category_id": 1,
-            "method_id": 6,
-            "leaf_amount": "2 scoops",
-            "temperature": "80°C",
-            "steeping_time": "Whisk vigorously in W shape",
+            "steeping_time": "Whisk slowly",
         },
         {
             "id": 3,
             "name": "Matcha",
             "category_id": 1,
-            "method_id": 4,
-            "leaf_amount": "0.5 scoops",
-            "temperature": "Room temp",
-            "steeping_time": "Shake or whisk briefly",
+            "method_id": 6,
+            "leaf_amount": "2 scoops",
+            "temperature": "80°C",
+            "steeping_time": "Whisk vigorously",
         },
         {
             "id": 4,
@@ -77,7 +68,7 @@ DEFAULT_DATA = {
             "steeping_time": "1st: 1min, 2nd: 20s, 3rd: ≥1min",
         },
         {
-            "id": 3,
+            "id": 42,
             "name": "Sencha",
             "category_id": 1,
             "method_id": 4,
@@ -430,7 +421,7 @@ DEFAULT_DATA = {
     ],
     "next_category_id": 7,
     "next_method_id": 7,
-    "next_tea_id": 44,
+    "next_tea_id": 43,
 }
 
 
