@@ -380,7 +380,7 @@
     <div class="container">
         <header>
             <h1>Tea</h1>
-            <button id="loginBtn" class="add-btn" onclick="showLoginModal()" style="margin-top: 10px;">Admin Login</button>
+            <button id="loginBtn" class="add-btn" onclick="showLoginModal()" style="margin-top: 10px;">Enter Editing Mode</button>
         </header>
 
         <div class="stats-bar">
@@ -461,7 +461,7 @@
 
     <div class="modal" id="loginModal" onclick="closeOnBackground(event)">
         <div class="modal-content" onclick="event.stopPropagation()">
-            <h2>Admin Login</h2>
+            <h2>Enter Editing Mode</h2>
             <form id="loginForm" onsubmit="handleLogin(event)">
                 <div class="form-group">
                     <label>Password</label>
@@ -545,7 +545,7 @@
                 btn.textContent = 'Logout';
                 btn.onclick = logout;
             } else {
-                btn.textContent = 'Admin Login';
+                btn.textContent = 'Enter Editing Mode';
                 btn.onclick = showLoginModal;
             }
         }

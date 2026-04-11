@@ -38,7 +38,6 @@ DEFAULT_DATA = {
         {"id": 4, "name": "Casual (500ml)", "volume": "500ml"},
         {"id": 5, "name": "Chawan (Koicha)", "volume": "100ml"},
         {"id": 6, "name": "Chawan (Usucha)", "volume": "150ml"},
-        {"id": 7, "name": "Chawan (Casual)", "volume": "300ml"},
     ],
     "teas": [
         {
@@ -46,7 +45,7 @@ DEFAULT_DATA = {
             "name": "Matcha",
             "category_id": 1,
             "method_id": 5,
-            "leaf_amount": "2 scoops",
+            "leaf_amount": "4 scoops",
             "temperature": "80°C",
             "steeping_time": "Whisk slowly until smooth",
         },
@@ -55,12 +54,19 @@ DEFAULT_DATA = {
             "name": "Matcha",
             "category_id": 1,
             "method_id": 6,
-            "leaf_amount": "1 scoop",
+            "leaf_amount": "2 scoops",
             "temperature": "80°C",
             "steeping_time": "Whisk vigorously in W shape",
         },
         {
             "id": 3,
+            "name": "Matcha",
+            "category_id": 1,
+            "method_id": 4,
+            "leaf_amount": "0.5 scoops",
+            "temperature": "Room temp",
+            "steeping_time": "Shake or whisk briefly",
+        },
             "name": "Matcha",
             "category_id": 1,
             "method_id": 7,
@@ -430,7 +436,7 @@ DEFAULT_DATA = {
         },
     ],
     "next_category_id": 7,
-    "next_method_id": 8,
+    "next_method_id": 7,
     "next_tea_id": 44,
 }
 
