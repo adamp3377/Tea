@@ -596,7 +596,7 @@
                                                 <div class="variation-detail">
                                                     ${v.leaf_amount ? `<span>Leaf: ${v.leaf_amount}</span>` : ''}
                                                     ${v.temperature ? `<span>Temp: ${v.temperature}</span>` : ''}
-                                                    ${v.steeping_time ? `<span>Time: ${v.steeping_time}</span>` : ''}
+                                                    ${v.steeping_time ? `<span>${v.method && v.method.includes('Chawan') ? 'Prep' : 'Time'}: ${v.steeping_time}</span>` : ''}
                                                 </div>
                                             </div>
                                         `).join('')}

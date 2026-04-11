@@ -36,19 +36,38 @@ DEFAULT_DATA = {
         {"id": 2, "name": "Kyusu (240ml)", "volume": "240ml"},
         {"id": 3, "name": "Gaiwan (120ml)", "volume": "120ml"},
         {"id": 4, "name": "Casual (500ml)", "volume": "500ml"},
+        {"id": 5, "name": "Chawan", "volume": "150ml"},
     ],
     "teas": [
         {
             "id": 1,
-            "name": "Matcha",
+            "name": "Matcha - Koicha",
             "category_id": 1,
-            "method_id": 1,
-            "leaf_amount": "2g",
+            "method_id": 5,
+            "leaf_amount": "4g",
             "temperature": "80°C",
-            "steeping_time": "Whisk vigorously",
+            "steeping_time": "2g chasen, whisk slowly",
         },
         {
             "id": 2,
+            "name": "Matcha - Usucha",
+            "category_id": 1,
+            "method_id": 5,
+            "leaf_amount": "2g",
+            "temperature": "80°C",
+            "steeping_time": "1g chasen, whisk vigorously",
+        },
+        {
+            "id": 3,
+            "name": "Matcha - Casual",
+            "category_id": 1,
+            "method_id": 4,
+            "leaf_amount": "1tsp",
+            "temperature": "Hot water",
+            "steeping_time": "Shake bottle",
+        },
+        {
+            "id": 4,
             "name": "Sencha",
             "category_id": 1,
             "method_id": 2,
@@ -409,8 +428,8 @@ DEFAULT_DATA = {
         },
     ],
     "next_category_id": 7,
-    "next_method_id": 5,
-    "next_tea_id": 42,
+    "next_method_id": 6,
+    "next_tea_id": 44,
 }
 
 
