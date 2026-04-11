@@ -67,13 +67,6 @@ DEFAULT_DATA = {
             "temperature": "Room temp",
             "steeping_time": "Shake or whisk briefly",
         },
-            "name": "Matcha",
-            "category_id": 1,
-            "method_id": 7,
-            "leaf_amount": "0.5 scoops",
-            "temperature": "Room temp",
-            "steeping_time": "Shake or whisk briefly",
-        },
         {
             "id": 4,
             "name": "Sencha",
