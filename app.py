@@ -6,6 +6,21 @@ import os
 app = Flask(__name__)
 CORS(app)
 DATA_FILE = "tea_data.json"
+ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD", "tea_admin")
+
+
+def check_auth():
+    auth_header = request.headers.get("Authorization", "")
+    return auth_header == ADMIN_PASSWORD
+
+
+@app.route("/api/auth", methods=["POST"])
+def check_password():
+    password = request.json.get("password", "")
+    if password == ADMIN_PASSWORD:
+        return jsonify({"success": True})
+    return jsonify({"success": False}), 401
+
 
 DEFAULT_DATA = {
     "categories": [
@@ -453,6 +468,8 @@ def get_categories():
 
 @app.route("/api/categories", methods=["POST"])
 def add_category():
+    if not check_auth():
+        return jsonify({"error": "Unauthorized"}), 401
     data = load_data()
     new_cat = {
         "id": data["next_category_id"],
@@ -466,6 +483,8 @@ def add_category():
 
 @app.route("/api/categories/<int:category_id>", methods=["DELETE"])
 def delete_category(category_id):
+    if not check_auth():
+        return jsonify({"error": "Unauthorized"}), 401
     data = load_data()
     data["teas"] = [t for t in data["teas"] if t["category_id"] != category_id]
     data["categories"] = [c for c in data["categories"] if c["id"] != category_id]
@@ -475,6 +494,8 @@ def delete_category(category_id):
 
 @app.route("/api/teas", methods=["POST"])
 def add_tea():
+    if not check_auth():
+        return jsonify({"error": "Unauthorized"}), 401
     data = load_data()
     req = request.json
     method = next(
@@ -498,8 +519,10 @@ def add_tea():
 
 @app.route("/api/teas/<int:tea_id>", methods=["PUT"])
 def update_tea(tea_id):
+    if not check_auth():
+        return jsonify({"error": "Unauthorized"}), 401
     data = load_data()
-    req = request.json()
+    req = request.json
     for tea in data["teas"]:
         if tea["id"] == tea_id:
             method = next(
@@ -523,6 +546,8 @@ def update_tea(tea_id):
 
 @app.route("/api/teas/<int:tea_id>", methods=["DELETE"])
 def delete_tea(tea_id):
+    if not check_auth():
+        return jsonify({"error": "Unauthorized"}), 401
     data = load_data()
     data["teas"] = [t for t in data["teas"] if t["id"] != tea_id]
     save_data(data)

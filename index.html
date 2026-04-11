@@ -380,6 +380,7 @@
     <div class="container">
         <header>
             <h1>Tea</h1>
+            <button id="loginBtn" class="add-btn" onclick="showLoginModal()" style="margin-top: 10px;">Admin Login</button>
         </header>
 
         <div class="stats-bar">
@@ -396,7 +397,7 @@
         <div class="main-section">
             <div class="section-header">
                 <h2 class="section-title">Tea Categories</h2>
-                <button class="add-btn" onclick="openCategoryModal()">+ Add Category</button>
+                ${adminPassword ? '<button id="addCategoryBtn" class="add-btn" onclick="openCategoryModal()">+ Add Category</button>' : ''}
             </div>
             <div id="categoriesContainer">
                 <div class="loading">Loading teas...</div>
@@ -458,6 +459,22 @@
         </div>
     </div>
 
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <h2>Admin Login</h2>
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="loginPassword" required>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="submit-btn">Login</button>
+                </div>
+            </form>
+            <p id="loginError" style="color: #d9534f; display: none; margin-top: 10px;">Invalid password</p>
+        </div>
+    </div>
+
     <script>
         const API_URL = window.location.origin + '/api';
         let categoriesData = [];
@@ -465,6 +482,38 @@
         let editingTeaId = null;
         let editingTeaCategoryId = null;
         let isNewTea = true;
+        let adminPassword = localStorage.getItem('adminPassword') || '';
+
+        async function handleLogin(event) {
+            event.preventDefault();
+            const password = document.getElementById('loginPassword').value;
+            const res = await fetch(`${API_URL}/auth`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ password })
+            });
+            if (res.ok) {
+                adminPassword = password;
+                localStorage.setItem('adminPassword', password);
+                document.getElementById('loginModal').classList.remove('active');
+                document.getElementById('loginError').style.display = 'none';
+                renderCategories();
+            } else {
+                document.getElementById('loginError').style.display = 'block';
+            }
+        }
+
+        function logout() {
+            adminPassword = '';
+            localStorage.removeItem('adminPassword');
+            renderCategories();
+        }
+
+        function showLoginModal() {
+            document.getElementById('loginModal').classList.add('active');
+            document.getElementById('loginPassword').value = '';
+            document.getElementById('loginError').style.display = 'none';
+        }
 
         async function fetchData() {
             try {
@@ -490,8 +539,20 @@
             }
         }
 
+        function updateLoginButton() {
+            const btn = document.getElementById('loginBtn');
+            if (adminPassword) {
+                btn.textContent = 'Logout';
+                btn.onclick = logout;
+            } else {
+                btn.textContent = 'Admin Login';
+                btn.onclick = showLoginModal;
+            }
+        }
+
         function renderCategories() {
             const container = document.getElementById('categoriesContainer');
+            updateLoginButton();
             
             if (categoriesData.length === 0) {
                 container.innerHTML = '<div class="empty-state">No categories yet. Add one above!</div>';
@@ -506,10 +567,12 @@
                             ${cat.name}
                             <span style="font-size: 0.8em; color: #888;">(${cat.teas.length} teas)</span>
                         </div>
+                        ${adminPassword ? `
                         <div class="category-actions">
                             <button onclick="event.stopPropagation(); openTeaModal(null, ${cat.id})" title="Add tea">➕</button>
                             <button class="delete-cat" onclick="event.stopPropagation(); deleteCategory(${cat.id})" title="Delete">🗑️</button>
                         </div>
+                        ` : ''}
                     </div>
                     <div class="category-content">
                         ${cat.teas.length > 0 ? `
@@ -523,10 +586,12 @@
                                             <div class="variation">
                                                 <div class="variation-header">
                                                     <div class="variation-method">${v.method}</div>
+                                                    ${adminPassword ? `
                                                     <div class="variation-actions">
                                                         <button class="edit-btn" onclick="event.stopPropagation(); editTea(${v.id}, ${cat.id})" title="Edit">✏️</button>
                                                         <button class="del-btn" onclick="event.stopPropagation(); deleteTea(${v.id})" title="Delete">🗑️</button>
                                                     </div>
+                                                    ` : ''}
                                                 </div>
                                                 <div class="variation-detail">
                                                     ${v.leaf_amount ? `<span>Leaf: ${v.leaf_amount}</span>` : ''}
@@ -535,7 +600,9 @@
                                                 </div>
                                             </div>
                                         `).join('')}
+                                        ${adminPassword ? `
                                         <button class="add-variation-btn" onclick="event.stopPropagation(); openTeaModal(null, ${cat.id}, '${tea.name.replace(/'/g, "\\'")}')">+ Add Variation</button>
+                                        ` : ''}
                                     </div>
                                 `).join('')}
                             </div>
@@ -572,11 +639,15 @@
 
         async function saveCategory(event) {
             event.preventDefault();
+            if (!adminPassword) { showLoginModal(); return; }
             const name = document.getElementById('categoryName').value.trim();
             
             const res = await fetch(`${API_URL}/categories`, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Authorization': adminPassword
+                },
                 body: JSON.stringify({ name })
             });
             
@@ -584,14 +655,18 @@
                 closeCategoryModal();
                 fetchData();
             } else {
-                alert('Category already exists');
+                alert('Category already exists or unauthorized');
             }
         }
 
         async function deleteCategory(id) {
+            if (!adminPassword) { showLoginModal(); return; }
             if (confirm('Delete this category and all its teas?')) {
-                await fetch(`${API_URL}/categories/${id}`, { method: 'DELETE' });
-                fetchData();
+                const res = await fetch(`${API_URL}/categories/${id}`, { 
+                    method: 'DELETE',
+                    headers: { 'Authorization': adminPassword }
+                });
+                if (res.ok) fetchData();
             }
         }
 
@@ -668,6 +743,7 @@
 
         async function saveTea(event) {
             event.preventDefault();
+            if (!adminPassword) { showLoginModal(); return; }
             
             const categoryId = document.getElementById('teaCategoryId').value || parseInt(document.getElementById('teaCategory').value);
             
@@ -691,24 +767,33 @@
             
             const res = await fetch(url, {
                 method,
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Authorization': adminPassword
+                },
                 body: JSON.stringify(teaData)
             });
             
             if (res.ok) {
                 closeTeaModal();
                 fetchData();
+            } else {
+                alert('Unauthorized');
             }
         }
 
         async function deleteTea(id) {
+            if (!adminPassword) { showLoginModal(); return; }
             if (confirm('Delete this variation?')) {
-                await fetch(`${API_URL}/teas/${id}`, { method: 'DELETE' });
-                fetchData();
+                const res = await fetch(`${API_URL}/teas/${id}`, { 
+                    method: 'DELETE',
+                    headers: { 'Authorization': adminPassword }
+                });
+                if (res.ok) fetchData();
             }
         }
 
-        fetchData();
+        fetchData().then(() => updateLoginButton());
     </script>
 </body>
 </html>
