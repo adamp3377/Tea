@@ -175,6 +175,11 @@
             font-weight: bold;
             color: #90EE90;
         }
+        .tea-temperature {
+            font-size: 0.85em;
+            color: #e65100;
+            font-weight: bold;
+        }
         .tea-actions {
             display: flex;
             gap: 5px;
@@ -581,6 +586,7 @@
                                     <div class="tea-card">
                                         <div class="tea-header">
                                             <div class="tea-name">${tea.name}</div>
+                                            ${tea.temperature ? `<div class="tea-temperature">${tea.temperature}</div>` : ''}
                                         </div>
                                         ${tea.variations.map(v => `
                                             <div class="variation">
@@ -595,7 +601,6 @@
                                                 </div>
                                                 <div class="variation-detail">
                                                     ${v.leaf_amount ? `<span>Leaf: ${v.leaf_amount}</span>` : ''}
-                                                    ${v.temperature ? `<span>Temp: ${v.temperature}</span>` : ''}
                                                     ${v.steeping_time ? `<span>${v.method && v.method.includes('Chawan') ? 'Prep' : 'Time'}: ${v.steeping_time}</span>` : ''}
                                                 </div>
                                             </div>
@@ -718,11 +723,13 @@
 
         function editTea(teaId, categoryId) {
             let teaData = null;
+            let parentTea = null;
             for (const cat of categoriesData) {
                 for (const tea of cat.teas) {
                     const found = tea.variations.find(v => v.id === teaId);
                     if (found) {
-                        teaData = { ...found, name: tea.name };
+                        parentTea = tea;
+                        teaData = { ...found, name: tea.name, temperature: tea.temperature };
                         break;
                     }
                 }

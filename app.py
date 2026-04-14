@@ -73,11 +73,11 @@ DEFAULT_DATA = {
             "category_id": 1,
             "method_id": 4,
             "leaf_amount": "2g",
-            "temperature": "~80°C",
+            "temperature": "80°C",
             "steeping_time": "2min",
         },
         {
-            "id": 4,
+            "id": 44,
             "name": "Shincha",
             "category_id": 1,
             "method_id": 1,
@@ -86,12 +86,12 @@ DEFAULT_DATA = {
             "steeping_time": "1st: 40s, 2nd: 20s, 3rd: ≥30s",
         },
         {
-            "id": 5,
+            "id": 45,
             "name": "Shincha",
             "category_id": 1,
             "method_id": 4,
             "leaf_amount": "3g",
-            "temperature": "~80°C",
+            "temperature": "80°C",
             "steeping_time": "2min",
         },
         {
@@ -109,7 +109,7 @@ DEFAULT_DATA = {
             "category_id": 1,
             "method_id": 4,
             "leaf_amount": "2g",
-            "temperature": "~80°C",
+            "temperature": "60°C",
             "steeping_time": "2min",
         },
         {
@@ -127,7 +127,7 @@ DEFAULT_DATA = {
             "category_id": 1,
             "method_id": 4,
             "leaf_amount": "2g",
-            "temperature": "~80°C",
+            "temperature": "80°C",
             "steeping_time": "2min",
         },
         {
@@ -136,7 +136,7 @@ DEFAULT_DATA = {
             "category_id": 1,
             "method_id": 2,
             "leaf_amount": "5g",
-            "temperature": "~80°C",
+            "temperature": "80°C",
             "steeping_time": "1st: 20s, 2nd: 15s, next: +5s",
         },
         {
@@ -145,7 +145,7 @@ DEFAULT_DATA = {
             "category_id": 1,
             "method_id": 4,
             "leaf_amount": "4g",
-            "temperature": "~80°C",
+            "temperature": "80°C",
             "steeping_time": "2min",
         },
         {
@@ -163,7 +163,7 @@ DEFAULT_DATA = {
             "category_id": 1,
             "method_id": 4,
             "leaf_amount": "3g",
-            "temperature": "~80°C",
+            "temperature": "80°C",
             "steeping_time": "30s",
         },
         {
@@ -181,7 +181,7 @@ DEFAULT_DATA = {
             "category_id": 1,
             "method_id": 4,
             "leaf_amount": "4g",
-            "temperature": "~80°C",
+            "temperature": "80°C",
             "steeping_time": "1min",
         },
         {
@@ -199,7 +199,7 @@ DEFAULT_DATA = {
             "category_id": 2,
             "method_id": 4,
             "leaf_amount": "3g",
-            "temperature": "~100°C",
+            "temperature": "90°C",
             "steeping_time": "3min",
         },
         {
@@ -217,7 +217,7 @@ DEFAULT_DATA = {
             "category_id": 2,
             "method_id": 4,
             "leaf_amount": "~2g",
-            "temperature": "~100°C",
+            "temperature": "90°C",
             "steeping_time": "2min",
         },
         {
@@ -235,7 +235,7 @@ DEFAULT_DATA = {
             "category_id": 2,
             "method_id": 4,
             "leaf_amount": "3g",
-            "temperature": "~100°C",
+            "temperature": "90°C",
             "steeping_time": "3min",
         },
         {
@@ -253,7 +253,7 @@ DEFAULT_DATA = {
             "category_id": 2,
             "method_id": 4,
             "leaf_amount": "3g",
-            "temperature": "~100°C",
+            "temperature": "90°C",
             "steeping_time": "3min",
         },
         {
@@ -271,7 +271,7 @@ DEFAULT_DATA = {
             "category_id": 3,
             "method_id": 4,
             "leaf_amount": "~2.5g",
-            "temperature": "~80°C",
+            "temperature": "80°C",
             "steeping_time": "5min",
         },
         {
@@ -289,7 +289,7 @@ DEFAULT_DATA = {
             "category_id": 3,
             "method_id": 4,
             "leaf_amount": "~2.5g",
-            "temperature": "~80°C",
+            "temperature": "80°C",
             "steeping_time": "5min",
         },
         {
@@ -307,7 +307,7 @@ DEFAULT_DATA = {
             "category_id": 3,
             "method_id": 4,
             "leaf_amount": "~2.5g",
-            "temperature": "~80°C",
+            "temperature": "80°C",
             "steeping_time": "5min",
         },
         {
@@ -325,7 +325,7 @@ DEFAULT_DATA = {
             "category_id": 3,
             "method_id": 4,
             "leaf_amount": "~2.5g",
-            "temperature": "~80°C",
+            "temperature": "80°C",
             "steeping_time": "5min",
         },
         {
@@ -343,7 +343,7 @@ DEFAULT_DATA = {
             "category_id": 4,
             "method_id": 4,
             "leaf_amount": "3g",
-            "temperature": "~80°C",
+            "temperature": "80°C",
             "steeping_time": "6min",
         },
         {
@@ -361,7 +361,7 @@ DEFAULT_DATA = {
             "category_id": 4,
             "method_id": 4,
             "leaf_amount": "3g",
-            "temperature": "~80°C",
+            "temperature": "80°C",
             "steeping_time": "2min",
         },
         {
@@ -379,7 +379,7 @@ DEFAULT_DATA = {
             "category_id": 5,
             "method_id": 4,
             "leaf_amount": "3g",
-            "temperature": "~80°C",
+            "temperature": "80°C",
             "steeping_time": "1min",
         },
         {
@@ -397,7 +397,7 @@ DEFAULT_DATA = {
             "category_id": 5,
             "method_id": 4,
             "leaf_amount": "2g",
-            "temperature": "~80°C",
+            "temperature": "80°C",
             "steeping_time": "1min",
         },
         {
@@ -415,13 +415,85 @@ DEFAULT_DATA = {
             "category_id": 6,
             "method_id": 4,
             "leaf_amount": "3g",
-            "temperature": "~80°C",
+            "temperature": "80°C",
             "steeping_time": "1min",
+        },
+        {
+            "id": 43,
+            "name": "Tsuyuhikari Oolong",
+            "category_id": 3,
+            "method_id": 3,
+            "leaf_amount": "5g",
+            "temperature": "80°C",
+            "steeping_time": "1st: 20s, 2nd: 15s, next: +5s",
+        },
+        {
+            "id": 44,
+            "name": "Tsuyuhikari Oolong",
+            "category_id": 3,
+            "method_id": 4,
+            "leaf_amount": "~2.5g",
+            "temperature": "80°C",
+            "steeping_time": "5min",
+        },
+        {
+            "id": 45,
+            "name": "Kamairicha",
+            "category_id": 1,
+            "method_id": 2,
+            "leaf_amount": "5g",
+            "temperature": "80°C",
+            "steeping_time": "1st: 1min, 2nd: 20s, 3rd: ≥1min",
+        },
+        {
+            "id": 46,
+            "name": "Kamairicha",
+            "category_id": 1,
+            "method_id": 4,
+            "leaf_amount": "2g",
+            "temperature": "80°C",
+            "steeping_time": "2min",
+        },
+        {
+            "id": 47,
+            "name": "Guricha",
+            "category_id": 1,
+            "method_id": 2,
+            "leaf_amount": "5g",
+            "temperature": "80°C",
+            "steeping_time": "1st: 1min, 2nd: 20s, 3rd: ≥1min",
+        },
+        {
+            "id": 48,
+            "name": "Guricha",
+            "category_id": 1,
+            "method_id": 4,
+            "leaf_amount": "2g",
+            "temperature": "80°C",
+            "steeping_time": "2min",
+        },
+        {
+            "id": 49,
+            "name": "Kabusecha",
+            "category_id": 1,
+            "method_id": 1,
+            "leaf_amount": "4g",
+            "temperature": "70°C",
+            "steeping_time": "1st: 1min, 2nd: 50s, 3rd: ≥1min",
+        },
+        {
+            "id": 50,
+            "name": "Kabusecha",
+            "category_id": 1,
+            "method_id": 4,
+            "leaf_amount": "2g",
+            "temperature": "70°C",
+            "steeping_time": "1min 30s",
         },
     ],
     "next_category_id": 7,
     "next_method_id": 7,
-    "next_tea_id": 43,
+    "next_tea_id": 51,
 }
 
 
@@ -456,6 +528,7 @@ def get_categories():
                 teas_dict[tea_name] = {
                     "id": tea["id"],
                     "name": tea_name,
+                    "temperature": tea.get("temperature"),
                     "variations": [],
                 }
             method = next(
@@ -467,12 +540,15 @@ def get_categories():
                     "method": method["name"] if method else None,
                     "method_volume": method["volume"] if method else None,
                     "leaf_amount": tea.get("leaf_amount"),
-                    "temperature": tea.get("temperature"),
                     "steeping_time": tea.get("steeping_time"),
                 }
             )
         result.append(
-            {"id": cat["id"], "name": cat["name"], "teas": list(teas_dict.values())}
+            {
+                "id": cat["id"],
+                "name": cat["name"],
+                "teas": list(teas_dict.values()),
+            }
         )
     return jsonify(result)
 
@@ -489,7 +565,13 @@ def add_category():
     data["categories"].append(new_cat)
     data["next_category_id"] += 1
     save_data(data)
-    return jsonify({"id": new_cat["id"], "name": new_cat["name"], "teas": []}), 201
+    return jsonify(
+        {
+            "id": new_cat["id"],
+            "name": new_cat["name"],
+            "teas": [],
+        }
+    ), 201
 
 
 @app.route("/api/categories/<int:category_id>", methods=["DELETE"])
