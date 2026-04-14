@@ -647,6 +647,37 @@ def delete_tea(tea_id):
     return jsonify({"success": True})
 
 
+@app.route("/api/teas/by-name", methods=["POST"])
+def delete_tea_by_name():
+    if not check_auth():
+        return jsonify({"error": "Unauthorized"}), 401
+    data = load_data()
+    req = request.json
+    name = req.get("name", "").strip()
+    category_id = int(req.get("category_id"))
+    data["teas"] = [
+        t for t in data["teas"] if t["name"] != name or t["category_id"] != category_id
+    ]
+    save_data(data)
+    return jsonify({"success": True})
+
+
+@app.route("/api/teas/by-name", methods=["PUT"])
+def update_tea_by_name():
+    if not check_auth():
+        return jsonify({"error": "Unauthorized"}), 401
+    data = load_data()
+    req = request.json
+    name = req.get("name", "").strip()
+    category_id = int(req.get("category_id"))
+    new_temperature = req.get("temperature", "").strip() or None
+    for tea in data["teas"]:
+        if tea["name"] == name and tea["category_id"] == category_id:
+            tea["temperature"] = new_temperature
+    save_data(data)
+    return jsonify({"success": True})
+
+
 @app.route("/api/methods", methods=["GET"])
 def get_methods():
     data = load_data()

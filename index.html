@@ -587,6 +587,12 @@
                                         <div class="tea-header">
                                             <div class="tea-name">${tea.name}</div>
                                             ${tea.temperature ? `<div class="tea-temperature">${tea.temperature}</div>` : ''}
+                                            ${adminPassword ? `
+                                            <div class="tea-actions">
+                                                <button class="edit-btn" onclick="event.stopPropagation(); editTeaType('${tea.name.replace(/'/g, "\\'")}', ${cat.id})" title="Edit">✏️</button>
+                                                <button class="del-btn" onclick="event.stopPropagation(); deleteTeaType('${tea.name.replace(/'/g, "\\'")}', ${cat.id})" title="Delete">🗑️</button>
+                                            </div>
+                                            ` : ''}
                                         </div>
                                         ${tea.variations.map(v => `
                                             <div class="variation">
@@ -692,7 +698,7 @@
             }
         }
 
-        function openTeaModal(teaData, categoryId, teaName = '') {
+        function openTeaModal(teaData, categoryId, teaName = '', teaTemperature = '') {
             isNewTea = true;
             editingTeaId = null;
             document.getElementById('teaModalTitle').textContent = 'Add Tea Variation';
@@ -710,6 +716,7 @@
                 document.getElementById('teaName').readOnly = true;
                 document.getElementById('categoryGroup').style.display = 'none';
                 document.getElementById('teaCategoryId').value = categoryId;
+                document.getElementById('teaTemp').value = teaTemperature || '';
             } else {
                 document.getElementById('teaName').readOnly = false;
             }
@@ -807,6 +814,55 @@
                     headers: { 'Authorization': adminPassword }
                 });
                 if (res.ok) fetchData();
+            }
+        }
+
+        function editTeaType(teaName, categoryId) {
+            let parentTea = null;
+            for (const cat of categoriesData) {
+                for (const tea of cat.teas) {
+                    if (tea.name === teaName) {
+                        parentTea = tea;
+                        break;
+                    }
+                }
+                if (parentTea) break;
+            }
+            
+            if (parentTea && adminPassword) {
+                const newTemp = prompt('Enter temperature:', parentTea.temperature || '');
+                if (newTemp !== null) {
+                    (async () => {
+                        const res = await fetch(`${API_URL}/teas/by-name`, {
+                            method: 'PUT',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': adminPassword
+                            },
+                            body: JSON.stringify({ name: teaName, category_id: categoryId, temperature: newTemp })
+                        });
+                        if (res.ok) fetchData();
+                    })();
+                }
+            } else if (!adminPassword) {
+                showLoginModal();
+            }
+        }
+
+        function deleteTeaType(teaName, categoryId) {
+            if (!adminPassword) { showLoginModal(); return; }
+            if (confirm(`Delete all variations of ${teaName}?`)) {
+                (async () => {
+                    const res = await fetch(`${API_URL}/teas/by-name`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': adminPassword
+                        },
+                        body: JSON.stringify({ name: teaName, category_id: categoryId })
+                    });
+                    if (res.ok) fetchData();
+                })();
             }
         }
 
